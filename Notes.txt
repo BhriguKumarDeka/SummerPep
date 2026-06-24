@@ -1,1 +1,20 @@
-Notes
+Time Complexity: How much time an algorithm takes as input size increases
+
+Big O -> represents the upper bound of running time, it gives the worst case scenario of an algorithm, and describes the maximum time an algorithm can take
+
+O(1) 
+  -> constant time. The time taken doesn't depend on the input size, the algorithm always runs in same time.
+  e.g. cout<<"Hello", for(int i=0; i<5; i++){}
+
+O(log n)
+  -> logarithmic time. The time grows logarithmically as input size increases, often seen in algos that divide the input in half, like binary search.
+
+O(n) 
+  -> linear time. The time grows constantly with the input size.
+
+O(n logn) 
+  -> linearithmic time. A mix of logarithmic and linear.
+
+O(n^2)
+  -> quadratic time. Time grows proportionally with the square of input size.
+
