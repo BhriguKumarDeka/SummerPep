@@ -71,3 +71,27 @@ class Solution {
     }
 };
 ```
+
+[05](https://www.geeksforgeeks.org/problems/triplet-sum-in-array-1587115621/1)
+```
+class Solution {
+  public:
+    bool hasTripletSum(vector<int> &arr, int target) {
+        // Code Here
+        sort(arr.begin(), arr.end());
+        for(int i=0; i<arr.size(); i++){
+            int need = target - arr[i];
+            int j = i+1, k = arr.size()-1;
+            while(j<k){
+                int sum = arr[j]+arr[k];
+                if(sum == need) return true;
+                else if(sum<need) j++;
+                else k--;
+            }
+        }
+        return false;
+    }
+};
+```
+
+
