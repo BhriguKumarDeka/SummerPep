@@ -94,4 +94,37 @@ class Solution {
 };
 ```
 
+[06](https://www.geeksforgeeks.org/problems/pair-sum-in-a-sorted-and-rotated-array/)
+```
+class Solution {
+	public:
+	bool pairInSortedRotated(vector<int>& arr, int target) {
+		// code here
+		int pivot = 0;
+		int n = arr.size();
+		
+		for (int i = 1; i<n; i++) {
+			if (arr[i - 1]>arr[i]) {
+				pivot = i;
+				break;
+			}
+		}
+		
+		int i = pivot, j = (pivot - 1 + n) % n ;
+		
+		while (i != j) {
+			int sum = arr[i]+arr[j];
+			if (sum == target)
+				return true;
+			else if (sum<target)
+				i = (i + 1)%n;
+			else
+				j = (j - 1 + n)%n;
+		}
+		
+		return false;
+	}
+};
+
+```
 
