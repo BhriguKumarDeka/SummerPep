@@ -216,3 +216,70 @@ public:
 };
 ```
 
+[242](https://leetcode.com/problems/valid-anagram/)
+```
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.length() != t.length()) return false;
+
+        int arr[26] = {0};
+
+        for(char ch : s){
+            arr[ch -'a']++;
+        }
+
+        for(char ch : t){
+            arr[ch -'a']--;
+            if(arr[ch -'a'] < 0) return false;
+        }
+
+        return true;
+    }
+};
+```
+
+[680](https://leetcode.com/problems/valid-palindrome-ii/)
+```
+class Solution {
+public:
+    bool palindromeHelper(string &s, int left, int right){
+        while(left<right){
+            if(s[left++]!=s[right--]) return false;
+        }
+        return true;
+    }
+
+    bool validPalindrome(string s) {
+      int l = 0;
+      int r = s.length()-1;
+
+      while(l < r){
+        if(s[l]==s[r]){
+            l++;
+            r--;
+        } else {
+            return palindromeHelper(s, l+1, r) || palindromeHelper(s, l, r-1); 
+        }
+      } 
+      return true; 
+    }
+};
+```
+
+[392](https://leetcode.com/problems/is-subsequence/)
+```
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int i = 0, j = 0;
+        while(i<s.length() && j<t.length()){
+            if(s[i]==t[j]){
+                i++;
+            }
+            j++;
+        }
+        return i==s.length();
+    }
+};
+```

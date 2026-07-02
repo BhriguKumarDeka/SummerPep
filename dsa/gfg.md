@@ -152,3 +152,62 @@ class Solution {
     }
 };
 ```
+
+[08](https://www.geeksforgeeks.org/problems/remove-all-duplicates-from-a-given-string4321/1)
+```
+class Solution {
+  public:
+    string removeDuplicates(string &s) {
+        // code here
+        vector<bool> seen (256, false);
+        string res = "";
+        
+        for(char ch : s){
+            if(!seen[ch]){
+                res+=ch;
+                seen[ch] = true;
+            }
+        }
+        return res;
+    }
+};
+```
+
+[09](https://www.geeksforgeeks.org/problems/find-first-repeated-character4108/)
+```
+class Solution {
+  public:
+    string firstRepChar(string s) {
+        vector<bool> seen (256, false);
+        for(char ch : s){
+            if(seen[ch]){
+                return {ch};
+            }
+            seen[ch] = true;
+        }
+        return "-1";
+    }
+};
+```
+
+[10](https://www.geeksforgeeks.org/problems/smallest-subarray-with-sum-greater-than-x5651/)
+```
+class Solution {
+  public:
+    int smallestSubWithSum(int x, vector<int>& arr) {
+        // Your code goes here
+        int left = 0;
+        int sum = 0;
+        int minLength = INT_MAX;
+        
+        for(int right = 0; right < arr.size(); right++){
+            sum+=arr[right];
+            while(sum>x){
+                minLength = min (minLength, right-left+1);
+                sum-=arr[left++];
+            }
+        }
+        return (minLength == INT_MAX) ? 0 : minLength;
+    }
+};
+```
