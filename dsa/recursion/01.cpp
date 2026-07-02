@@ -25,13 +25,14 @@ using namespace std;
 //   return linearSearch(arr+1, size-1, key);
 // }
 
-bool binarySearch(vector<int> v, int low, int high, int key){
-  if(low>high) return false;
-  int mid = (low + high )/ 2;
-  if(v[mid] == key) return true;
-  else if (v[mid] > key) return binarySearch(v, low, mid-1, key);
-  else return binarySearch(v, mid+1, high, key);
-}
+// bool binarySearch(vector<int> v, int low, int high, int key){
+//   if(low>high) return false;
+//   int mid = (low + high )/ 2;
+//   if(v[mid] == key) return true;
+//   else if (v[mid] > key) return binarySearch(v, low, mid-1, key);
+//   else return binarySearch(v, mid+1, high, key);
+// }
+
 
 int main(){
   // printNum(10);
@@ -48,8 +49,9 @@ int main(){
   // int key = 50;
   // cout<<linearSearch(arr, size, key);
 
-  vector<int> v = {3, 5,7, 9, 11, 13, 15};
-  int key = 10;
-  cout<<binarySearch(v, 0, v.size()-1, key);
-  cout<<binarySearch(v, 0, v.size()-1, 13);
+  // vector<int> v = {3, 5,7, 9, 11, 13, 15};
+  // int key = 10;
+  // cout<<binarySearch(v, 0, v.size()-1, key);
+  // cout<<binarySearch(v, 0, v.size()-1, 13);
+
 }
