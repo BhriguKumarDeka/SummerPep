@@ -91,9 +91,6 @@ void deleteAtHead(Node* &head){
   delete temp;
 }
 
-//insertion at beg, nth
-//deletion at end, nth
-
 int main(){
   Node* head = NULL;
   insertAtEnd(head, 10);
