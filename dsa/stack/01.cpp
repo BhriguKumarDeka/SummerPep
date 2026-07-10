@@ -20,4 +20,29 @@ class MyStack{
     top++;
     arr[top] = val;
   }
+
+  void pop(){
+    if(top==-1){
+      cout<<"Stack underflow"<<endl;
+      return;
+    }
+    top--;
+  }
+
+  bool isEmpty(){
+    return (top == -1);
+  }
+
+  int peek(){
+    return arr[top];
+  }
+
+  int size(){
+    return top+1;
+  }
+
+};
+
+int main(){
+  
 }
