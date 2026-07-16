@@ -1,0 +1,8 @@
+Height: the max level in a tree determines its height. The height of a node in a tree is the length of the longest path from that node to a leaf
+
+Depth: The number of nodes along the path from the root to that node
+
+if BT has height h.
+
+max no. leaves = 2^h;
+max no. nodes = 2^(h+1)-1;

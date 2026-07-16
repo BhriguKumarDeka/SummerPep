@@ -277,3 +277,139 @@ class myStack {
 };
 ```
 
+[13](https://www.geeksforgeeks.org/problems/queue-reversal/)
+```
+class Solution {
+  public:
+    void reverseQueue(queue<int> &q) {
+        if(q.empty()) return;
+        
+        int val = q.front();
+        q.pop();
+        reverseQueue(q);
+        q.push(val);
+    }
+};
+```
+[14](http://geeksforgeeks.org/problems/reverse-first-k-elements-of-queue/)
+```
+class Solution {
+  public:
+    void reverse(queue<int> &q, int k){
+        if(k == 0) return;
+        int temp = q.front();
+        q.pop();
+        reverse(q, k-1);
+        q.push(temp);
+  }
+  
+    queue<int> reverseFirstK(queue<int> q, int k) {
+        int n = q.size();
+        if(k>q.size()) return q;
+        reverse(q,k);
+        int c = n-k;
+        
+        while(c--){
+            q.push(q.front());
+            q.pop();
+        }
+        
+        return q;
+    }
+    
+    // queue<int>reverseFirstK(queue<int>q, int k){
+    //     stack<int> st;
+    //     if(k>q.size())return q;
+        
+    //     for(int i=0; i<k; i++){
+    //         st.push(q.front());
+    //         q.pop();
+    //     }
+        
+    //     while(!st.empty()){
+    //         q.push(st.top());
+    //         st.pop();
+    //     }
+        
+    //     for(int i = 0; i<q.size()-k; i++ ){
+    //         q.push(q.front());
+    //         q.pop();
+    //     }
+    //     return q;
+    // }
+};
+```
+
+[15](https://www.geeksforgeeks.org/problems/interleave-the-first-half-of-the-queue-with-second-half/)
+```
+class Solution {
+  public:
+    void rearrangeQueue(queue<int> &q) {
+        // code here
+        stack<int> st;
+        // if(q.empty()) return;
+        int n = q.size()/2;
+        
+        //1. push first half of queue to stack
+        // q = 3 1 | st = 4 2
+        for(int i = 0; i<n; i++){
+            st.push(q.front());
+            q.pop();
+        }
+        
+        //2. push the stack elements to queue
+        // q = 3 1 4 2 | st = 0
+        while(!st.empty()){
+            q.push(st.top());
+            st.pop();
+        }
+        
+        //3. dequeue first half and enqueue in the same queue
+        // q = 4 2 3 1 | st = 0
+        for(int i =0; i<n; i++){
+            q.push(q.front());
+            q.pop();
+        }
+        
+        //4. push the first half of queue to stack again
+        // q = 3 1 | st = 2 4
+        for(int i =0; i<n; i++){
+            st.push(q.front());
+            q.pop();
+        }
+        
+        //5. Interleave the elements from queue and stack
+        // q = 2 3 4 1
+        while(!st.empty()){
+            q.push(st.top());
+            st.pop();
+            q.push(q.front());
+            q.pop();
+        }
+    }
+};
+```
+[16](https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/)
+```
+class Solution {
+  public:
+    vector<int> nextLargerElement(vector<int>& arr) {
+        stack<int> st;
+        int n = arr.size();
+        vector <int> res(n);
+        
+        for(int i = n-1; i>=0; i--){
+            while(!st.empty() && st.top() <= arr[i]) st.pop(); 
+            
+            if(st.empty()){
+                res[i] = -1;
+            } else {
+                res[i] = st.top();
+            }
+            st.push(arr[i]);
+        }
+        return res;
+    }
+};
+```
+

@@ -720,6 +720,237 @@ public:
 };
 ```
 
-[]()
+[84](https://leetcode.com/problems/largest-rectangle-in-histogram/)
 ```
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+
+        stack<int> st;
+        vector<int> left(n);
+        vector<int> right(n);
+
+        // find the prev smaller
+        for (int i = 0; i < n; i++) {
+            while (!st.empty() && heights[st.top()] >= heights[i])
+                st.pop();
+            if (st.empty())
+                left[i] = -1;
+            else
+                left[i] = st.top();
+
+            st.push(i);
+        }
+
+        while (!st.empty())
+            st.pop();
+
+        // find the next smaller
+        for (int j = n - 1; j >= 0; j--) {
+            while (!st.empty() && heights[st.top()] >= heights[j])
+                st.pop();
+            if (st.empty())
+                right[j] = n;
+            else
+                right[j] = st.top();
+
+            st.push(j);
+        }
+
+        int maxArea = 0;
+        for(int i = 0; i < n; i++){
+            int width = right[i] - left[i] - 1;
+            int area = heights[i] * width;
+            maxArea = max(maxArea, area);
+        }
+
+        return maxArea;
+    }
+};
+```
+
+[155](https://leetcode.com/problems/min-stack/)
+```
+class MinStack {
+private:
+    stack<int> mainStack;
+    stack<int> minStack;
+public:
+    MinStack() {}
+
+    void push(int val) {
+        mainStack.push(val);
+        if (minStack.empty() || val <= minStack.top()) {
+            minStack.push(val);
+        } else {
+            minStack.push(minStack.top());
+        }
+    }
+
+    void pop() {
+        mainStack.pop();
+        minStack.pop();
+    }
+
+    int top() { return mainStack.top(); }
+
+    int getMin() { return minStack.top(); }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(value);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+```
+
+[735](https://leetcode.com/problems/asteroid-collision/)
+```
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int> st;
+
+        // iterate each asteroids
+        for (int i : asteroids) {
+            // check directions
+            // if positive, push to stack
+            if (i > 0) {
+                st.push(i);
+            }
+            // if negative we will compare with top of stack
+            else {
+                bool alive = true;
+                // check until one of them are destroyed
+                while (!st.empty() && st.top() > 0) {
+                    // if negative is bigger, positive dies
+                    if (abs(i) > st.top())
+                        st.pop();
+                    // if asteroids are equal, both dies
+                    else if (abs(i) == st.top()) {
+                        st.pop();
+                        alive = false;
+                        break;
+                    }
+                    // if positive is bigger, negative dies
+                    else {
+                        alive = false;
+                        break;
+                    }
+                }
+                if (alive)
+                    st.push(i);
+            }
+        }
+
+        vector<int> ans(st.size());
+        for (int i = ans.size() - 1; i >= 0; i--) {
+            ans[i] = st.top();
+            st.pop();
+        }
+
+        return ans;
+    }
+};
+```
+
+[622](https://leetcode.com/problems/design-circular-queue/)
+```
+class MyCircularQueue {
+private:
+    vector<int> data;
+    int front, rear, count, size;
+
+public:
+    MyCircularQueue(int k) {
+        data.resize(k);
+        front = 0;
+        rear = -1;
+        count = 0;
+        size = k;
+    }
+    
+    bool enQueue(int value) {
+        if(isFull()) return false;
+        rear = (rear+1)%size;
+        data[rear] = value;
+        count ++;
+        return true;
+    }
+    
+    bool deQueue() {
+        if(isEmpty()) return false;
+        front = (front+1)%size;
+        count--;
+        return true; 
+    }
+    
+    int Front() {
+        if(isEmpty()) return -1;
+        return data[front];
+    }
+    
+    int Rear() {
+        if(isEmpty()) return -1;
+        return data[rear];
+    }
+    
+    bool isEmpty() {
+        return count == 0;
+    }
+    
+    bool isFull() {
+        return count == size;
+    }
+};
+
+/**
+ * Your MyCircularQueue object will be instantiated and called as such:
+ * MyCircularQueue* obj = new MyCircularQueue(k);
+ * bool param_1 = obj->enQueue(value);
+ * bool param_2 = obj->deQueue();
+ * int param_3 = obj->Front();
+ * int param_4 = obj->Rear();
+ * bool param_5 = obj->isEmpty();
+ * bool param_6 = obj->isFull();
+ */
+```
+
+[94](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+```
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
+class Solution {
+private:
+    void helper(TreeNode* root, vector<int>& v) {
+        TreeNode* temp = root;
+        if (temp == NULL)
+            return;
+
+        helper(temp->left, v);
+        v.push_back(temp->val);
+        helper(temp->right, v);
+    }
+
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> vals;
+        helper(root, vals);
+        return vals;
+    }
+};
 ```
