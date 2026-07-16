@@ -6,3 +6,18 @@ if BT has height h.
 
 max no. leaves = 2^h;
 max no. nodes = 2^(h+1)-1;
+
+| Property             | Formula                    |
+| -------------------- | -------------------------- |
+| Height (edges)       | 1 + max(LH, RH)            |
+| Total Nodes          | 1 + Left + Right           |
+| Leaf Nodes           | Left Leaves + Right Leaves |
+| Internal Nodes       | Nodes - Leaves             |
+| Edges                | Nodes - 1                  |
+| Max nodes at level i | 2^i                        |
+| Max nodes (height h) | 2^(h+1)-1                  |
+| Min nodes (height h) | h+1                        |
+| Perfect tree leaves  | 2^h                        |
+| Full tree            | Leaves = Internal + 1      |
+| Minimum height       | ⌊log₂(n)⌋                   |
+| Maximum height       | n-1                        |
