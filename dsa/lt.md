@@ -954,3 +954,327 @@ public:
     }
 };
 ```
+
+[404](https://leetcode.com/problems/sum-of-left-leaves/)
+```
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == NULL)
+            return 0;
+        int sum = 0;
+        // 1. check if root -> left exists
+        // 2. check if it is a leaf node, i.e. both left & right of the root->left is NULL
+        if (root->left && root->left->left == NULL && root->left->right == NULL)
+        //store the leaf val in sum
+            sum += root->left->val;
+        //call for left & right subtree
+        sum += sumOfLeftLeaves(root->left);
+        sum += sumOfLeftLeaves(root->right);
+
+        return sum;
+    }
+};
+```
+
+[100](https://leetcode.com/problems/same-tree)
+```
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL || q==NULL) return p==q ;
+
+        if(p->val != q->val) return false;
+        bool a = isSameTree(p->left, q->left);
+        bool b = isSameTree(p->right, q->right);
+        return a && b;
+    }
+};
+```
+
+[102](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+```
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if (root == nullptr)
+            return ans;
+
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int levelSize = q.size();
+            vector<int> levelElements;
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode* frontNode = q.front();
+                q.pop();
+
+                levelElements.push_back(frontNode->val);
+                if (frontNode->left)
+                    q.push(frontNode->left);
+                if (frontNode->right)
+                    q.push(frontNode->right);
+            }
+            ans.push_back(levelElements);
+    }
+    return ans;
+    }
+};
+```
+
+[103](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+```
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(root == NULL) return ans;
+        queue <TreeNode*> q;
+        q.push(root);
+        bool flag = false;
+
+        while(!q.empty()){
+            flag = !flag;
+            int size = q.size();
+            vector <int> levelElements;
+
+            while(size--){
+                TreeNode* queueFront = q.front();
+                q.pop();
+
+                levelElements.push_back(queueFront->val);
+                if(queueFront->left) q.push(queueFront->left);
+                if(queueFront->right) q.push(queueFront->right);
+            }
+            if(!flag){
+                reverse(levelElements.begin(), levelElements.end());
+            }
+
+            ans.push_back(levelElements);
+        }
+        return ans;
+    }
+};
+```
+
+[199](https://leetcode.com/problems/binary-tree-right-side-view/)
+```
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> res;
+        if(root == NULL) return res;
+
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while(!q.empty()){
+            int size = q.size();
+            int lastValue = 0;
+
+            while(size--){
+                TreeNode* qFront = q.front();
+                q.pop();
+
+                lastValue = qFront->val;
+                if(qFront->left) q.push(qFront->left);
+                if(qFront->right) q.push(qFront->right);
+            }
+
+            res.push_back(lastValue);
+        }
+
+        return res;
+    }
+};
+```
+
+[236](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+```
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root) return root;
+        if(root == p || root == q) return root;
+
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+
+        if(left && right) return root;
+        return left ? left : right;
+    }
+};
+```
+
+[700](https://leetcode.com/problems/search-in-a-binary-search-tree/)
+```
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(!root) return root; 
+        if(root->val == val) return root;
+        else if ( root->val > val) return searchBST(root->left, val);
+        else return searchBST(root->right, val);
+
+        return root;
+    }
+};
+```
+
+[938](https://leetcode.com/problems/range-sum-of-bst/)
+```
+class Solution {
+public:
+    int sum = 0;
+    int inorder(TreeNode* root, int low, int high) {
+        if (root == NULL)
+            return 0;
+        if (root->val >= low && root->val <= high)
+            sum += root->val;
+        inorder(root->left, low, high);
+        inorder(root->right, low, high);
+
+        return sum;
+    }
+
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        return inorder(root, low, high);
+    }
+};
+```
+
+[701](https://leetcode.com/problems/insert-into-a-binary-search-tree/)
+```
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root==NULL) return new TreeNode(val);
+
+        if(root->val > val){
+            root->left = insertIntoBST(root->left, val);
+        } else {
+            root->right = insertIntoBST(root->right, val);
+        }
+
+        return root;
+    }
+};
+```
+
+[653](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/)
+```
+class Solution {
+public:
+    void inorder(TreeNode* root, vector<int>& arr) {
+        if (root == NULL)
+            return;
+        inorder(root->left, arr);
+        arr.push_back(root->val);
+        inorder(root->right, arr);
+    }
+
+    bool findTarget(TreeNode* root, int k) {
+        vector<int> arr;
+        inorder(root, arr);
+
+        int i = 0;
+        int j = arr.size() - 1;
+
+        while (i < j) {
+            int sum = arr[i] + arr[j];
+            if (sum > k)
+                j--;
+            else if (sum < k)
+                i++;
+            else
+                return true;
+        }
+
+        return false;
+    }
+};
+```
+
+[98](https://leetcode.com/problems/validate-binary-search-tree)
+```
+class Solution {
+public:
+    bool validate(TreeNode* node, long long min, long long max){
+        if(node==nullptr) return true;
+
+        if(node->val <= min || node->val >= max) return false;
+
+        return validate(node->left, min, node->val) && validate(node->right, node->val, max);
+    }
+
+    bool isValidBST(TreeNode* root) {
+        return validate(root, LLONG_MIN, LLONG_MAX);
+    }
+};
+```
+
+[230](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+```
+class Solution {
+public:
+    void inorder(TreeNode* root, vector<int> & nums){
+        if(!root) return;
+        inorder(root->left, nums);
+        nums.push_back(root->val);
+        inorder(root->right, nums);
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        vector<int> nums;
+        inorder(root, nums);
+
+        return nums[k-1];
+    }
+};
+```
+
+[450](https://leetcode.com/problems/delete-node-in-a-bst/)
+```
+class Solution {
+public:
+    TreeNode* minElement(TreeNode* node){
+        if(!node) return node;
+        while(node->left) node = node->left;
+        return node;
+    }
+
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        //step 1-> find the node to be deleted by traversing
+        // step 2 -> restructure its children while preserving the order
+
+        //case 1: Node with no children(Leaf Node) | can be deleted directly
+        if(root == NULL) return nullptr;
+
+        if(key < root->val){
+        root->left = deleteNode(root->left, key);
+        } else if (key > root->val) {
+        root->right = deleteNode(root->right, key);
+        } else {
+        // case 2: Node with one child
+        if(root->left == NULL){
+            TreeNode* temp = root->right;
+            delete root;
+            return temp;
+        }  else if (root -> right == NULL){
+            TreeNode* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // case 3: Node with two children
+        // find the inorder successor (min element in right subtree)
+        TreeNode* temp = minElement (root->right);
+        root->val = temp->val;
+
+        root->right = deleteNode(root->right, temp->val);
+        }
+        return root;
+    }
+};
+```
