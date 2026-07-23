@@ -1,0 +1,22 @@
+A graph G = (V,E) consist of
+V: set of vertices
+E: set of edges
+
+Types of graph:
+Directed 
+Undirected
+Weighted
+Unweighted
+
+Path: sequence of vertices connected with edges
+
+Cycle: path that loops back to itself
+
+Degree: 
+  in Undirected
+    |- number of edges connected to a node
+  in Directed
+    |
+    |- In degree: number of edges coming towards a node
+    |
+    |- Out degree: number of edges going from a node 

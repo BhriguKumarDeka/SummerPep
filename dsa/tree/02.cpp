@@ -59,8 +59,8 @@ void levelOrder(TreeNode* root){
   if(root== nullptr) return;
 
   queue<TreeNode*> q;
-  q.push<root>;
-  q.push<nullptr>;
+  q.push(root);
+  q.push(nullptr);
 
   while(!q.empty()){
     TreeNode* frontNode = q.front();
@@ -84,8 +84,6 @@ int main()
   insert(root, 30);
   insert(root, 40);
   insert(root, 60);
-
-  cout<<height(root);
 
   return 0;
 }
