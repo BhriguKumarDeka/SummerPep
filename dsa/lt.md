@@ -1278,3 +1278,49 @@ public:
     }
 };
 ```
+
+[844](https://leetcode.com/problems/backspace-string-compare/)
+```
+class Solution {
+public:
+    string backspace(string & s){
+        string st;
+
+        for(char c: s){
+            if(c == '#'){
+                if(!st.empty())
+                    st.pop_back();
+            }
+            else st.push_back(c);
+        }
+
+        return st;
+    }
+
+    bool backspaceCompare(string s, string t) {
+        return backspace(s) == backspace(t);
+    }
+};
+```
+
+[2390](https://leetcode.com/problems/removing-stars-from-a-string/)
+```
+class Solution {
+public:
+    string removeStars(string s) {
+        string ans;
+
+        for(char c : s){
+            if(c == '*'){
+                if(!ans.empty()) ans.pop_back();
+            }
+            else ans.push_back(c);
+        }
+
+        // reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+```
+
+

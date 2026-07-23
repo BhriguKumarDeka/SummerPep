@@ -453,3 +453,172 @@ class Solution {
     }
 };
 ```
+
+[19](https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/)
+```
+class Solution {
+  public:
+    vector<int> topView(Node *root) {
+        vector<int> result;
+        
+        if(root == NULL) return result;
+        //create a map store first occurrence of node at each level
+        map <int, int> mp;
+        
+        queue<pair<Node*, int>> q;
+        //start with root at hd = 0
+        q.push(make_pair(root, 0));
+        
+        while(!q.empty()){
+            //store the node value
+            pair<Node* , int> frontNode = q.front();
+            q.pop();
+            
+            Node* node = frontNode.first;
+            int hd = frontNode.second;
+            
+            //if the hd doesn't exists in mp, push it to mp
+            if(mp.find(hd) == mp.end()) mp[hd] = node->data;
+            
+            if(node->left) q.push(make_pair(node->left, hd-1));
+            if(node->right) q.push(make_pair(node->right, hd+1));
+        }
+        for(auto &it: mp){
+            result.push_back(it.second);
+        }
+        return result;
+    }
+};
+```
+
+[20](https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1)
+```
+class Solution {
+	public:
+	void leftTraversal(Node* root, vector<int>& ans) {
+	    //return if root is null or it is a leaf
+		if (root == NULL || root->left == nullptr && root->right == nullptr)
+			return;
+		ans.push_back(root->data);
+		if (root->left)
+			leftTraversal(root->left, ans);
+		else
+			leftTraversal(root->right, ans);
+	}
+	
+	void rightTraversal(Node* root, vector<int>& ans) {
+	    //return if root is null or it is a leaf
+		if (root == NULL || root->left == nullptr && root->right == nullptr)
+			return;
+		if (root->right)
+			rightTraversal(root->right, ans);
+		else
+			rightTraversal(root->left, ans);
+		ans.push_back(root->data);
+	}
+	
+	void leafTraversal(Node* root, vector<int>& ans) {
+		if (root == NULL)
+			return;
+		if (root->left == NULL && root->right == NULL) {
+			ans.push_back(root->data);
+		}
+		// traverse whole tree for the leaves
+		leafTraversal(root->left, ans);
+		leafTraversal(root->right, ans);
+	}
+	
+	vector<int> boundaryTraversal(Node *root) {
+		vector<int> ans;
+		if (root == nullptr)
+			return ans;
+		ans.push_back(root->data);
+		leftTraversal(root->left, ans);
+		leafTraversal(root->left, ans);
+		leafTraversal(root->right, ans);
+		rightTraversal(root->right, ans);
+		
+		return ans;
+	}
+};
+```
+
+[21](https://www.geeksforgeeks.org/problems/k-distance-from-root/1)
+```
+class Solution {
+  public:
+    vector<int> kdistance(int k, Node *root) {
+        vector<int> ans;
+        if(root == NULL) return ans;
+        
+        queue<Node*> q;
+        q.push(root);
+        int count = 0;
+        
+        while(!q.empty()){
+            int size = q.size();
+            
+            if(count==k){
+                while(size--){
+                    ans.push_back(q.front()->data);
+                    q.pop();
+                }
+                return ans;
+            }
+            
+            while(size--){
+                Node* qf = q.front();
+                q.pop();
+                
+                if(qf->left) q.push(qf->left); 
+                if(qf->right) q.push(qf->right); 
+            }
+            
+            count ++;
+        }
+        return ans;
+    }
+};
+```
+
+[22](https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1)
+```
+class Solution {
+  public:
+    vector<int> bfs(vector<vector<int>> &adj) {
+        /*
+        ALGO
+        ===========
+        1. create a visited array to keep track of visited nodes
+        2. create a queue for BFS traversal
+        3. start from any node, mark it visited and push it in queue
+        4. while(q is not empty)
+            remove the front node
+            add it to answer
+        5. visit all unvisited neighbours, mark them visited and push them to queue
+        6. return all BFS output
+        */
+        int V = adj.size();
+        vector<int> ans;
+        vector<bool> visited(V, false);
+        
+        queue<int> q;
+        q.push(0);
+        visited[0]= true;
+        
+        while(!q.empty()){
+            int frontNode = q.front();
+            q.pop();
+            ans.push_back(frontNode);
+            
+            for(auto neighbour : adj[frontNode]){
+                if(!visited[neighbour]){
+                    visited[neighbour] = true;
+                    q.push(neighbour);
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
